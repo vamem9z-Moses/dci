@@ -10,7 +10,7 @@ refined my approach. Refining these examples has taken a couple of months even
 though they are all included in the same commit.
 
 ## Golang
-To run the golang examples clone the repo and run './setgopath.sh' and then go
+To run the golang examples clone the repo and source 'setgopath' and then go
 to the godci directory select the version and run for example in the v4
 directory 'go run dcitutv4.go'
 
