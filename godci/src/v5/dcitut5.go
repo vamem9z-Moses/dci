@@ -43,7 +43,7 @@ func (ap AccountProtection) Action(ctx Contexter) error {
 		if err != nil {
 			return errors.New("No savings account, Insufficient funds")
 		}
-		if !((savingsAccount.Balance() + accCtx.Account.Balance()) >= accCtx.Amount) {
+		if (savingsAccount.Balance() + accCtx.Account.Balance()) < accCtx.Amount {
 			return errors.New("Insufficent Funds in both accounts")
 		}
 		transferAmt := accCtx.Amount - accCtx.Account.Balance()
