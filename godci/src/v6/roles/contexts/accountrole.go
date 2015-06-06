@@ -22,7 +22,7 @@ func (accRole *AccountRole) Deposit(accCtx *AccountDepositContext) {
 	accRole.RecordTransaction(accCtx.Message, accCtx.EntryTime, accCtx.Amount, transType)
 }
 
-func (accRole *AccountRole) Withdraw(accCtx *AccountWithdrawContext) error {
+func (accRole *AccountRole) Withdraw(accCtx *AccountWithdrawContext) {
 	var transType string
 
 	switch accCtx.Account.AccountType {
@@ -32,7 +32,6 @@ func (accRole *AccountRole) Withdraw(accCtx *AccountWithdrawContext) error {
 		transType = domains.CREDIT
 	}
 	accRole.RecordTransaction(accCtx.Message, accCtx.EntryTime, accCtx.Amount, transType)
-	return nil
 }
 
 type AccountWithdrawContext struct {
