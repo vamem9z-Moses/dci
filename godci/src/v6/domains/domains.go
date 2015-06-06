@@ -1,3 +1,6 @@
+// Package domain provides core buisness domain objects. These objects have
+// a minimal amount of functionality.
+
 package domains
 
 const (
