@@ -14,9 +14,10 @@ To run the golang examples clone the repo and source 'setgopath' and then go
 to the godci directory select the version and run for example in the v4
 directory 'go run dcitutv4.go'
 
-v4 and v5 are the latest and most correct versions. v4 expresses all of the dci
+v4, v5, v6 are the latest and most correct versions. v4 expresses all of the dci
 principles correctly. v5 is an evolution of v4 and shows how to incoproate the
-concept of a buisness rule into dci.
+concept of a buisness rule into dci. v6 is an evolution of v5 and refactors the
+codebase into separate packages and adds tests.
 
 ## Javascript
 These examples require node version 0.10.30+. To run go to jsdci and run 'node
