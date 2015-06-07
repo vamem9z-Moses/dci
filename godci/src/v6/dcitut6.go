@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
-	"v6/dci"
+	"v6/data"
+	"v6/domains"
+	"v6/roles/contexts"
 )
 
 func main() {
-	us := dci.UserService{}
+	us := data.UserService{}
 	Moses, _ := us.FindUser(12234)
 	Kathy, _ := us.FindUser(2394)
 	TransferMoneyContextExample(Moses, Kathy)
@@ -15,15 +17,15 @@ func main() {
 	PayBillsContextExample(David)
 
 }
-func TransferMoneyContextExample(moses *dci.User, kathy *dci.User) {
-	MosesAccount, _ := moses.GetAccount(dci.CHECKINGACCOUNT)
-	KathyAccount, _ := kathy.GetAccount(dci.CHECKINGACCOUNT)
+func TransferMoneyContextExample(moses *data.User, kathy *data.User) {
+	MosesAccount, _ := moses.GetAccount(domains.CHECKINGACCOUNT)
+	KathyAccount, _ := kathy.GetAccount(domains.CHECKINGACCOUNT)
 
 	fmt.Println("TransferMoney Context Example")
 	fmt.Println("")
 	fmt.Println("Moses Account - Beginning Balance = ", MosesAccount.Balance())
 	fmt.Println("Kathy Account - Beginning Balance = ", KathyAccount.Balance())
-	tmc := dci.TransferMoneyContext{}
+	tmc := contexts.TransferMoneyContext{}
 	tmc.Initialize(20.5, MosesAccount, KathyAccount)
 	tmc.Execute()
 	fmt.Println("Moses Account - Middle Balance = ", MosesAccount.Balance())
@@ -49,7 +51,7 @@ func TransferMoneyContextExample(moses *dci.User, kathy *dci.User) {
 	}
 }
 
-func PayBillsContextExample(david *dci.User) {
+func PayBillsContextExample(david *data.User) {
 	DavidAccount, _ := david.GetAccountByID(30)
 	VendorAccount1, _ := david.GetAccountByID(31)
 	VendorAccount2, _ := david.GetAccountByID(32)
@@ -58,8 +60,8 @@ func PayBillsContextExample(david *dci.User) {
 	fmt.Println("")
 
 	fmt.Println("David Beginning Balance", DavidAccount.Balance())
-	creditors := []*dci.AccountDomain{VendorAccount1, VendorAccount2}
-	pbc := dci.PayBillsContext{}
+	creditors := []*domains.AccountDomain{VendorAccount1, VendorAccount2}
+	pbc := contexts.PayBillsContext{}
 
 	pbc.Initialize(DavidAccount, creditors)
 	pbc.Execute()
