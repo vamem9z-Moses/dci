@@ -28,12 +28,17 @@ func (tms *TransferMoneySource) TransferTo(ctx *TransferMoneyContext) error {
 	return nil
 }
 
-func (tms *TransferMoneySource) PayBills(pbc *PayBillsContext) {
+func (tms *TransferMoneySource) PayBills(pbc *PayBillsContext) error {
 	for _, creditor := range pbc.Creditors {
 		tmc := TransferMoneyContext{}
 		tmc.Initialize(creditor.Balance(), pbc.SourceAccount.AccountDomain, creditor)
-		tmc.Execute()
+		err := tmc.Execute()
+		if err != nil {
+			return err
+		}
+
 	}
+	return nil
 }
 
 type TransferMoneyContext struct {
@@ -67,6 +72,10 @@ func (pbc *PayBillsContext) Initialize(source *domains.AccountDomain, creditAcct
 
 }
 
-func (pbc *PayBillsContext) Execute() {
-	pbc.SourceAccount.PayBills(pbc)
+func (pbc *PayBillsContext) Execute() error {
+	err := pbc.SourceAccount.PayBills(pbc)
+	if err != nil {
+		return err
+	}
+	return nil
 }

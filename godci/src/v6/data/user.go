@@ -37,11 +37,21 @@ func (as Accounts) GetAccountByID(acctID int) (*domains.AccountDomain, error) {
 	return nil, errors.New(errorMsg)
 }
 
-type UserCollection []*User
-
 type UserService struct{}
 
-func (us UserService) GetCollection() UserCollection {
+func (us UserService) FindUser(id int) (*User, error) {
+	uc := users
+	for _, u := range uc {
+		if u.UserID == id {
+			return u, nil
+		}
+	}
+	return nil, errors.New("Cannot Find User")
+}
+
+type UserCollection []*User
+
+func setUserCollection() UserCollection {
 	uc := make([]*User, 0)
 
 	MosesCheckingAccount := domains.AccountDomain{
@@ -146,12 +156,8 @@ func (us UserService) GetCollection() UserCollection {
 	return uc
 }
 
-func (us UserService) FindUser(id int) (*User, error) {
-	uc := us.GetCollection()
-	for _, u := range uc {
-		if u.UserID == id {
-			return u, nil
-		}
-	}
-	return nil, errors.New("Cannot Find User")
+var users UserCollection
+
+func init() {
+	users = setUserCollection()
 }
