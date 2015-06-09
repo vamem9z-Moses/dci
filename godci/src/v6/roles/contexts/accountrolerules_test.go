@@ -5,7 +5,7 @@ import (
 	"time"
 	"v6/data"
 	"v6/domains"
-	"v6/rules"
+	"v6/roles/rules"
 )
 
 type testContext struct {

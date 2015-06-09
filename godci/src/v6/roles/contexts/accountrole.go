@@ -3,7 +3,7 @@ package contexts
 import (
 	"time"
 	"v6/domains"
-	"v6/rules"
+	"v6/roles/rules"
 )
 
 type AccountRole struct {
