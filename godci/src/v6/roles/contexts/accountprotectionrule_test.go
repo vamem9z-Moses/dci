@@ -21,7 +21,7 @@ func withdrawCtxNoSavings() *AccountWithdrawContext {
 	us := data.UserService{}
 	david, _ := us.FindUser(394)
 	davidAct, _ := david.GetAccountByID(30)
-	accCtx.Initialize(davidAct, "Insuffient funds and no savings account Test",
+	accCtx.Initialize(davidAct, "Insufficient funds and no savings account Test",
 		time.Now(), 300000)
 	return &accCtx
 }
@@ -31,7 +31,7 @@ func withdrawInsufficientFunds() *AccountWithdrawContext {
 	us := data.UserService{}
 	moses, _ := us.FindUser(12234)
 	mosesAct, _ := moses.GetAccountByID(10)
-	accCtx.Initialize(mosesAct, "Insuffient funds Test",
+	accCtx.Initialize(mosesAct, "Insufficient funds Test",
 		time.Now(), 300000)
 	return &accCtx
 }
@@ -70,12 +70,12 @@ var accountProectionErrorConditions = []struct {
 		result:  "Not the correct context",
 	},
 	{
-		name:    "Insuffienct funds and no savings account Test",
+		name:    "Insufficient funds and no savings account Test",
 		context: withdrawCtxNoSavings(),
 		result:  "No savings account, Insufficient funds",
 	},
 	{
-		name:    "Insufficent funds",
+		name:    "Insufficient funds",
 		context: withdrawInsufficientFunds(),
 		result:  "Insufficient funds in both accounts",
 	},
@@ -103,7 +103,7 @@ func TestAccountProtection(t *testing.T) {
 			err.Error())
 	}
 	if ctx.Account.Balance() != 6000 {
-		t.Errorf("Test %s failed, remaing balance = %f, expected balance to be 0",
+		t.Errorf("Test %s failed, remaining balance = %f, expected balance to be 0",
 			testname, ctx.Account.Balance())
 	}
 }
