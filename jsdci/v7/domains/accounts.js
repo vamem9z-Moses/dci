@@ -1,16 +1,10 @@
 (function () {
   "use strict";
 
-  var Constants, AccountInfo, EntryItem, AccountDomain;
+  var Constants = require('./constants.js');
 
-  Constants = {
-    LiabilityAccount: "liabilityaccount",
-    AssetAccount: "assetaccount",
-    Credit: "credit",
-    Debit: "debit",
-  };
+  var AccountInfo, EntryItem, AccountDomain;
 
-  Object.freeze(Constants);
 
   AccountInfo = function AccountInfo(accountID, lastName, firstName, startingBalance, accountType) {
     var self = this instanceof AccountInfo ? this : Object.create(AccountInfo.prototype);
@@ -58,7 +52,7 @@
     }
   };
 
-  module.exports = { Constants: Constants, AccountInfo: AccountInfo, EntryItem: EntryItem,
+  module.exports = {AccountInfo: AccountInfo, EntryItem: EntryItem,
     AccountDomain: AccountDomain,
   };
 })();
