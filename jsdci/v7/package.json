@@ -1,0 +1,17 @@
+{
+  "name": "jsdciv7",
+  "version": "0.7.0",
+  "description": "",
+  "main": "jsdciv7.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "qunit"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.0.0"
+  }
+}
