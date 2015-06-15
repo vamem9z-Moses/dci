@@ -5,7 +5,7 @@
 
   RoleRequirementError = function RoleRequirementException(msg) {
     var self = this instanceof RoleRequirementException ? this : Object.create(RoleRequirementError.prototype);
-    self.name = 'RoleRequirementError'
+    self.name = 'RoleRequirementError';
     self.message = msg || 'Missing Required Role';
     return self;
   };
@@ -15,8 +15,8 @@
 
   Context = function Context() {
     var self = this instanceof Context ? this : Object.create(Context.prototype);
-    return self
-  }
+    return self;
+  };
 
   Context.prototype = Object.create(Object.prototype);
   Context.prototype.constructor = Context;
@@ -49,7 +49,7 @@
 	methods = Object.getOwnPropertyNames(role);
 	methods.map(function (method) {
 	  obj[method] = role[method];
-	})
+	});
       } else {
 	  throw new RoleRequirementError();
       }
@@ -61,8 +61,6 @@
         delete obj[method];
       });
     };
-
-
 
   module.exports = { RoleRequirementError: RoleRequirementError,
     Context: Context

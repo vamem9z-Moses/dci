@@ -55,7 +55,7 @@
            function() {
 	     try {
 	       testContext.assignRole(testRoleWithRequirements,
-                                                emptyRole, testContext)
+                                                emptyRole, testContext);
 	     } catch (e) {
 	      assert.instanceOf(e, contexts.RoleRequirementError);
 	     }
@@ -69,7 +69,7 @@
 	  assert.isTrue(newRole.hasOwnProperty('testfn1'));
 	  testContext.removeRole(testRole, newRole);
 	  assert.isFalse(newRole.hasOwnProperty('testfn1'));
-      })
+      });
 
     });
   });
