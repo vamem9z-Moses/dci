@@ -5,7 +5,6 @@
 
   var AccountInfo, EntryItem, AccountDomain;
 
-
   AccountInfo = function AccountInfo(accountID, lastName, firstName, startingBalance, accountType) {
     var self = this instanceof AccountInfo ? this : Object.create(AccountInfo.prototype);
     self.accountID = accountID;

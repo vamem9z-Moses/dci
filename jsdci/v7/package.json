@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "qunit"
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",
