@@ -1,13 +1,19 @@
 (function() {
   "use strict";
 
+  var Constants = require('../../domains/constants.js');
+  var contexts = require('../../roles/contexts/contexts.js');
+  var domains = require('../../domains/accounts.js');
+
+  var AccountRole, AccountDepositContext, AccountWithDrawContext;
+
   AccountRole = {
     roleRequirements: function roleRequirements() {
-      return [this.accountInfo, this.entries];
+      return ['accountInfo', 'entries'];
     },
     deposit:  function deposit(accountDepositContext) {
       var transType, entry;
-      switch (this.accountInfo.accountType) {
+      switch (accountDepositContext.account.accountInfo.accountType) {
         case Constants.AssetAccount:
           transType = Constants.Credit;
           break;
@@ -15,13 +21,15 @@
           transType = Constants.Debit;
           break;
       }
-      entry = Object.create(EntryItem(this.accountInfo.accountID, accountDepositContext.entryTime,
-                                accountDepositContext.message, accountDepositContext.amount, transType));
-      this.entries[this.entries.length] = entry;
+      entry = new domains.EntryItem(accountDepositContext.account.accountInfo.accountID,
+                                      accountDepositContext.entryTime,
+                                      accountDepositContext.message,
+                                      accountDepositContext.amount, transType);
+      accountDepositContext.account.entries[accountDepositContext.account.entries.length] = entry;
     },
-    withdraw: function withdraw(AccountWithDrawContext) {
+    withdraw: function withdraw(accountWithDrawContext) {
       var transType, entry;
-      switch (this.accountInfo.accountType) {
+      switch (accountWithDrawContext.account.accountInfo.accountType) {
         case Constants.AssetAccount:
           transType = Constants.Debit;
           break;
@@ -29,9 +37,11 @@
           transType = Constants.Credit;
           break;
       }
-      entry = EntryItem(this.accountInfo.accountID, AccountWithDrawContext.entryTime,
-                                AccountWithDrawContext.message, AccountWithDrawContext.amount, transType);
-    this.entries[this.entries.length] = entry;
+      entry = new domains.EntryItem(accountWithDrawContext.account.accountInfo.accountID,
+                                    accountWithDrawContext.entryTime,
+                                    accountWithDrawContext.message,
+                                    accountWithDrawContext.amount, transType);
+    accountWithDrawContext.account.entries[accountWithDrawContext.account.entries.length] = entry;
     }
   };
 
@@ -41,11 +51,11 @@
     self.message = message;
     self.entryTime = entryTime;
     self.amount = amount;
-    self.assignRole(AccountRole, self.account);
+    self.assignRole(AccountRole, self.account, this);
     return self;
   };
 
-  AccountDepositContext.prototype = Object.create(Context);
+  AccountDepositContext.prototype = Object.create(contexts.Context.prototype);
 
   AccountDepositContext.prototype.execute = function execute() {
     this.account.deposit(this);
@@ -58,14 +68,18 @@
     self.message = message;
     self.entryTime = entryTime;
     self.amount = amount;
-    self.assignRole(AccountRole, self.account);
+    self.assignRole(AccountRole, self.account, this);
     return self;
   };
 
-  AccountWithDrawContext.prototype = Object.create(Context);
+  AccountWithDrawContext.prototype = Object.create(contexts.Context.prototype);
 
   AccountWithDrawContext.prototype.execute = function execute() {
     this.account.withdraw(this);
     this.removeRole(AccountRole, this.account);
+  };
+
+  module.exports = { AccountRole: AccountRole, AccountDepositContext: AccountDepositContext,
+    AccountWithDrawContext: AccountWithDrawContext
   };
 })();
