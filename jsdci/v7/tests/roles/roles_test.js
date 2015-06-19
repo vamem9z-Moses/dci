@@ -5,10 +5,10 @@
 
   var TestContext = function TestContext(role, obj) {
     var self = this instanceof TestContext ? this : Object.create(TestContext.prototype);
-    this.role = role;
-    this.obj = obj;
-    this.roleMgr = roles.RoleMgr();
-    this.roleMgr.assignRole(this.role, this.obj);
+    self.role = role;
+    self.obj = obj;
+    self.roleMgr = roles.RoleMgr();
+    self.roleMgr.assignRole(self.role, self.obj);
     return self;
   };
 
