@@ -1,9 +1,9 @@
 (function() {
   "use strict";
 
-  var Constants = require('../../domains/constants.js');
-  var roles = require('../../roles/roles.js');
-  var domains = require('../../domains/accounts.js');
+  var Constants = require('../domains/constants.js');
+  var roles = require('./roles.js');
+  var domains = require('../domains/accounts.js');
 
   var AccountRole, AccountDepositContext, AccountWithDrawContext;
 

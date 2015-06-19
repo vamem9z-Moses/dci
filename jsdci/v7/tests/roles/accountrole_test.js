@@ -1,6 +1,6 @@
 (function() {
   var assert = require('chai').assert;
-  var accounts = require('../../roles/contexts/accountrole.js');
+  var accounts = require('../../roles/accountrole.js');
   var domains = require('../../domains/accounts.js');
   var constants = require('../../domains/constants.js');
 
