@@ -2,7 +2,7 @@
   "use strict";
 
   var Constants = require('../../domains/constants.js');
-  var contexts = require('../../roles/contexts/contexts.js');
+  var roles = require('../../roles/roles.js');
   var domains = require('../../domains/accounts.js');
 
   var AccountRole, AccountDepositContext, AccountWithDrawContext;
@@ -51,15 +51,16 @@
     self.message = message;
     self.entryTime = entryTime;
     self.amount = amount;
-    self.assignRole(AccountRole, self.account, this);
+    self.roleMgr = new roles.RoleMgr();
+    self.roleMgr.assignRole(AccountRole, self.account);
     return self;
   };
 
-  AccountDepositContext.prototype = Object.create(contexts.Context.prototype);
+  AccountDepositContext.prototype = Object.create(Object.prototype);
 
   AccountDepositContext.prototype.execute = function execute() {
     this.account.deposit(this);
-    this.removeRole(AccountRole, this.account);
+    this.roleMgr.removeRole(AccountRole, this.account);
   };
 
   AccountWithDrawContext = function AccountWithDrawContext(accountDomain, message, entryTime, amount) {
@@ -68,15 +69,16 @@
     self.message = message;
     self.entryTime = entryTime;
     self.amount = amount;
-    self.assignRole(AccountRole, self.account, this);
+    self.roleMgr = new roles.RoleMgr();
+    self.roleMgr.assignRole(AccountRole, self.account);
     return self;
   };
 
-  AccountWithDrawContext.prototype = Object.create(contexts.Context.prototype);
+  AccountWithDrawContext.prototype = Object.create(Object.prototype);
 
   AccountWithDrawContext.prototype.execute = function execute() {
     this.account.withdraw(this);
-    this.removeRole(AccountRole, this.account);
+    this.roleMgr.removeRole(AccountRole, this.account);
   };
 
   module.exports = { AccountRole: AccountRole, AccountDepositContext: AccountDepositContext,
