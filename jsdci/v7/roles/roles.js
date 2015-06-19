@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var RoleRequirementError, Context;
+  var RoleRequirementError, RoleMgr;
 
   RoleRequirementError = function RoleRequirementException(msg) {
     var self = this instanceof RoleRequirementException ? this : Object.create(RoleRequirementError.prototype);
@@ -13,15 +13,15 @@
   RoleRequirementError.prototype = Object.create(Error.prototype);
   RoleRequirementError.prototype.constructor = RoleRequirementError;
 
-  Context = function Context() {
-    var self = this instanceof Context ? this : Object.create(Context.prototype);
+  RoleMgr = function RoleMgr() {
+    var self = this instanceof RoleMgr ? this : Object.create(RoleMgr.prototype);
     return self;
   };
 
-  Context.prototype = Object.create(Object.prototype);
-  Context.prototype.constructor = Context;
+  RoleMgr.prototype = Object.create(Object.prototype);
+  RoleMgr.prototype.constructor = RoleMgr;
 
-  Context.prototype.checkRequirements = function checkRequirements(requirements, obj) {
+  RoleMgr.prototype.checkRequirements = function checkRequirements(requirements, obj) {
     var hasRequirement, indexer, len;
       for (indexer = 0, len = requirements.length; indexer < len; indexer += 1) {
 	if (obj.hasOwnProperty(requirements[indexer])) {
@@ -34,18 +34,18 @@
       return hasRequirement;
     };
 
-  Context.prototype.hasRequirements = function hasRoleRequirements(role, obj, ctx) {
+  RoleMgr.prototype.hasRequirements = function hasRoleRequirements(role, obj) {
       var requirements;
-      if (role.hasOwnProperty('roleRequirements')) {
-        requirements = role.roleRequirements();
-        return ctx.checkRequirements(requirements, obj);
+      if (this.hasOwnProperty('roleRequirements')) {
+        requirements = this.roleRequirements();
+        return this.checkRequirements(requirements, obj);
       }
       return true;
     };
 
-  Context.prototype.assignRole = function assignRole(role, obj, ctx) {
+  RoleMgr.prototype.assignRole = function assignRole(role, obj) {
       var methods;
-      if (ctx.hasRequirements(role, obj,ctx)) {
+      if (this.hasRequirements(role, obj)) {
 	methods = Object.getOwnPropertyNames(role);
 	methods.map(function (method) {
 	  obj[method] = role[method];
@@ -55,7 +55,7 @@
       }
     };
 
-  Context.prototype.removeRole = function removeRole(role, obj) {
+  RoleMgr.prototype.removeRole = function removeRole(role, obj) {
       var methods = Object.getOwnPropertyNames(role);
       methods.map(function (method) {
         delete obj[method];
@@ -63,6 +63,6 @@
     };
 
   module.exports = { RoleRequirementError: RoleRequirementError,
-    Context: Context
+    RoleMgr: RoleMgr
   };
 })();
