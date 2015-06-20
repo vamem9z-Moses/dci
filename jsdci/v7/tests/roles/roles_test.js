@@ -2,8 +2,10 @@
   var assert = require('chai').assert;
   var roles = require('../../roles/roles.js');
 
+  var TestContext, TestRole, TestRoleWithRequirements, TestRoleWithRequirementsMethods,
+    TestRoleMethods, newRole, newRoleWithRequirements, emptyRole;
 
-  var TestContext = function TestContext(role, obj) {
+  TestContext = function TestContext(role, obj) {
     var self = this instanceof TestContext ? this : Object.create(TestContext.prototype);
     self.role = role;
     self.obj = obj;
@@ -15,14 +17,14 @@
   TestContext.prototype = Object.create(Object.prototype);
   TestContext.prototype.constructor = TestContext;
 
-  var TestRole = function TestRole() {
+  TestRole = function TestRole() {
     var self = this instanceof TestRole ? this : Object.create(Object.prototype);
     self.testfn1 = function() {};
     self.testfn2 = function() {};
     return self;
   };
 
-  var TestRoleWithRequirements = function TestRoleWithRequirements() {
+  TestRoleWithRequirements = function TestRoleWithRequirements() {
     var self = this instanceof TestRoleWithRequirements ? this : Object.create(Object.prototype);
     self.testfn1 = function() {};
     self.testfn2 = function() {};
@@ -32,20 +34,20 @@
     return self;
   };
 
-  var TestRoleWithRequirementsMethods = Object.getOwnPropertyNames(TestRoleWithRequirements());
+  TestRoleWithRequirementsMethods = Object.getOwnPropertyNames(TestRoleWithRequirements());
 
-  var TestRoleMethods = Object.getOwnPropertyNames(TestRole());
+  TestRoleMethods = Object.getOwnPropertyNames(TestRole());
 
-  var newRole = function newRole() {
+  newRole = function newRole() {
     var self = this instanceof newRole ? this : Object.create(Object.prototype);
     return self;
   };
 
-  var newRoleWithRequirements = {};
+  newRoleWithRequirements = {};
 
   newRoleWithRequirements.testMethod = function testMethod() {};
 
-  var emptyRole ={};
+  emptyRole ={};
 
   describe('Role Functions', function() {
     describe('assignRole()', function() {

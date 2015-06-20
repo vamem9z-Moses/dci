@@ -36,7 +36,7 @@
       var creditor, tmc;
       for (var i=0, len = payBillsContext.creditors.length; i < len; i++) {
         creditor = payBillsContext.creditors[i];
-        tmc = new TransferMoneyContext(this, creditor, creditor.balance());
+        tmc = new TransferMoneyContext(payBillsContext.source, creditor, creditor.balance());
         tmc.execute();
       }
     }
@@ -64,7 +64,8 @@
     var self = this instanceof PayBillsContext ? this : Object.create(PayBillsContext.prototype);
     self.source = sourceAccount;
     self.creditors = creditors;
-    self.assignRole(TransferMoneySource, self.source);
+    self.roleMgr = roles.RoleMgr();
+    self.roleMgr.assignRole(TransferMoneySource, self.source);
     return self;
   };
 
@@ -73,7 +74,7 @@
 
   PayBillsContext.prototype.execute  = function execute() {
       this.source.payBills(this);
-      this.removeRole(TransferMoneySource, this.source);
+      this.roleMgr.removeRole(TransferMoneySource, this.source);
   };
 
   module.exports = { TransferMoneySource: TransferMoneySource,
