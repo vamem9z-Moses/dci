@@ -70,7 +70,7 @@ func resetTranferAccounts() {
 	vendorAccount2.Entries = make([]*domains.EntryItem, 0)
 }
 
-func TestTransferMoneySource(t *testing.T) {
+func TestTransferMoney(t *testing.T) {
 	for _, test := range transferMoneyTests {
 		originalSourceBalance := test.sourceAccount.Balance()
 		newSourceBalance := originalSourceBalance - test.amount
